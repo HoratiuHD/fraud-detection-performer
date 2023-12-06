@@ -1,0 +1,187 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Redshift_ExecuteQuery" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="The Database Connection you will use for running Scripts" Name="in_DBConnectionRedshift" Type="InArgument(ui:DatabaseConnection)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property sap2010:Annotation.AnnotationText="The SQL Query you wish to Run. Please ensure all required Variables are already inputted (e.g. if you need to Replace a Placeholder with Account ID in the Script)" Name="in_SQLQuery" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property sap2010:Annotation.AnnotationText="The Output Datatable of the Script you Ran" Name="out_OutputDT" Type="OutArgument(sd:DataTable)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property sap2010:Annotation.AnnotationText="Optional - Give the Script a name for Logging Purposes" Name="in_ScriptName" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Optional - The Total Time the Script took to Execute in Seconds" Name="out_TotalTimeInSeconds" Type="OutArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Optional - A List of Strings containing each Column Name. May be useful for Mapping" Name="out_ColumnNames" Type="OutArgument(scg:List(x:String))" />
+    <x:Property sap2010:Annotation.AnnotationText="Optional - Provide a Timeout Duration in Milliseconds (e.g. 10000 for 10 seconds) for Execution of Query. " Name="in_Timeout" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:Annotation.AnnotationText>UPTF000001D4eyI8SGVscExpbms+a19fQmFja2luZ0ZpZWxkIjpudWxsLCI8SW5pdGlhbFRvb2x0aXA+a19fQmFja2luZ0ZpZWxkIjoiQSBRdWVyeSB0byBFeGVjdXRlIGEgc3BlY2lmaWVkIFNRTCBRdWVyeSBvbiBSZWRzaGlmdC4gXHUwMDBkXHUwMDBhWW91IHdpbGwgbmVlZCB0byBwcm92aWRlIGFuIFNRTCBRdWVyeSBhbmQgYSBEYXRhYmFzZUNvbm5lY3Rpb24gKHVzZSB0aGUgQXV0aGVudGljYXRlIEFjdGl2aXR5IGZvciB0aGlzKS4gXHUwMDBkXHUwMDBhWW91IHdpbGwgYmUgcmV0dXJuZWQgYSBEYXRhdGFibGUgY29udGFpbmluZyB0aGUgcmVzdWx0cyBvZiB0aGUgUXVlcnkiLCI8VmVyc2lvbj5rX19CYWNraW5nRmllbGQiOjF9</sap2010:Annotation.AnnotationText>
+  <sap:VirtualizedContainerService.HintSize>761,1796</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ExecuteQuery_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="46">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>UiPath.Database</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.Database.Activities</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="44">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.Database</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>UiPath.Database.Activities</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="A Query to Execute a specified SQL Query on Redshift. &#xA;You will need to provide an SQL Query and a DatabaseConnection (use the Authenticate Activity for this). &#xA;You will be returned a Datatable containing the results of the Query" DisplayName="Redshift_ExecuteQuery" sap:VirtualizedContainerService.HintSize="771,1731" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:TimeSpan" Name="timeSpanScriptStart" />
+      <Variable x:TypeArguments="x:TimeSpan" Name="timeSpanScriptTotal" />
+      <Variable x:TypeArguments="x:String" Name="strTotalTimeInSeconds" />
+      <Variable x:TypeArguments="scg:List(x:String)" Default="[New List(Of String)]" Name="listColumnNames" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <If Condition="[String.IsNullOrEmpty(in_SQLQuery)]" DisplayName="If String.IsNullOrEmpty(in_SQLQuery)" sap:VirtualizedContainerService.HintSize="729,405" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <Throw DisplayName="Throw Exception (SQL Query Empty)" Exception="[If(String.IsNullOrEmpty(in_ScriptName),&#xA;New Exception(&quot;Redshift_ExecuteQuery - SQL Query Argument Provided is an Empty String&quot;),&#xA;New Exception(&quot;Redshift_ExecuteQuery - SQL Query Argument Provided for &quot;+in_ScriptName+&quot; is an Empty String&quot;)&#xA;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+      </If.Then>
+      <If.Else>
+        <If Condition="[in_DBConnectionRedshift is Nothing]" DisplayName="If in_DBConnectionRedshift is Nothing" sap:VirtualizedContainerService.HintSize="484,247" sap2010:WorkflowViewState.IdRef="If_2">
+          <If.Then>
+            <Throw DisplayName="Throw Exception (DB Connection is Nothing)" Exception="[If(String.IsNullOrEmpty(in_ScriptName),&#xA;New Exception(&quot;Redshift_ExecuteQuery - Database Connection Argument Provided is an Empty Object&quot;),&#xA;New Exception(&quot;Redshift_ExecuteQuery - Database Connection Argument Provided for &quot;+in_ScriptName+&quot; is an Empty Object&quot;)&#xA;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_2" />
+          </If.Then>
+        </If>
+      </If.Else>
+    </If>
+    <ui:LogMessage DisplayName="Log Message - Redshift_ExecuteQuery Start" sap:VirtualizedContainerService.HintSize="729,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Executing &quot;+If(String.IsNullOrEmpty(in_ScriptName), &quot;&quot;, &quot;&quot;&quot;&quot;+in_ScriptName+&quot;&quot;&quot; &quot;)+&quot;Script in Redshift now&quot;]" />
+    <Assign sap2010:Annotation.AnnotationText="We want to Calculate how long it takes for the Script to Run" DisplayName="Assign timeSpanScriptStart" sap:VirtualizedContainerService.HintSize="729,102" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:TimeSpan">[timeSpanScriptStart]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:TimeSpan">[System.DateTime.Now.TimeOfDay]</InArgument>
+      </Assign.Value>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </Assign>
+    <ui:ExecuteQuery ContinueOnError="{x:Null}" CommandType="Text" DataTable="[out_OutputDT]" DisplayName="Execute Query - Redshift" ExistingDbConnection="[in_DBConnectionRedshift]" sap:VirtualizedContainerService.HintSize="729,88" sap2010:WorkflowViewState.IdRef="ExecuteQuery_2" Sql="[in_SQLQuery]" TimeoutMS="[If(String.IsNullOrEmpty(in_Timeout), Nothing, CInt(in_Timeout))]">
+      <ui:ExecuteQuery.Parameters>
+        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+      </ui:ExecuteQuery.Parameters>
+    </ui:ExecuteQuery>
+    <Assign sap2010:Annotation.AnnotationText="We want to Calculate how long it takes for the Script to Run" DisplayName="Assign timeSpanScriptTotal" sap:VirtualizedContainerService.HintSize="729,102" sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:TimeSpan">[timeSpanScriptTotal]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:TimeSpan">[System.DateTime.Now.TimeOfDay.Subtract(timeSpanScriptStart)]</InArgument>
+      </Assign.Value>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </Assign>
+    <Assign DisplayName="Assign strTotalTimeInSeconds" sap:VirtualizedContainerService.HintSize="729,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[strTotalTimeInSeconds]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[String.Format("{0:N3} s", timeSpanScriptTotal.TotalSeconds)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:LogMessage DisplayName="Log Message - Execute Query Results" sap:VirtualizedContainerService.HintSize="729,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[out_OutputDT.Rows.Count.ToString+&quot; Rows Returned for &quot;+If(String.IsNullOrEmpty(in_ScriptName),&quot;Requested Script&quot;,&quot;&quot;&quot;&quot;+in_ScriptName+&quot;&quot;&quot; Script&quot;)+&quot;. Script took &quot;+strTotalTimeInSeconds+&quot; to run&quot;]" />
+    <ui:ForEach x:TypeArguments="sd:DataColumn" CurrentIndex="{x:Null}" DisplayName="For Each Column in out_OutputDT.Columns" sap:VirtualizedContainerService.HintSize="729,194" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[out_OutputDT.Columns]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="sd:DataColumn">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="sd:DataColumn" Name="Column" />
+          </ActivityAction.Argument>
+          <AddToCollection x:TypeArguments="x:String" Collection="[listColumnNames]" DisplayName="Add To Collection - listColumnNames" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="AddToCollection`1_2" Item="[Column.ColumnName.ToString]" />
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+    <ui:MultipleAssign DisplayName="Multiple Assign - Output (ExecuteQuery)" sap:VirtualizedContainerService.HintSize="729,129" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+      <ui:MultipleAssign.AssignOperations>
+        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="scg:List(x:String)">[out_ColumnNames]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="scg:List(x:String)">[listColumnNames]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[out_TotalTimeInSeconds]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[strTotalTimeInSeconds]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+        </scg:List>
+      </ui:MultipleAssign.AssignOperations>
+    </ui:MultipleAssign>
+  </Sequence>
+</Activity>

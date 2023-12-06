@@ -1,0 +1,35 @@
+WITH acc_id_table AS (
+SELECT acc.account_id 
+FROM omni_account.vw_account acc
+WHERE acc.account_id IN (*accountId*) --Enter Account ID's here
+)
+, Smart_IDs AS (
+SELECT DISTINCT acc.account_id, log.fuzzy_device_id
+FROM omni_cust_ops_pii.vw_login_threat_metrix log
+INNER JOIN acc_id_table acc ON log.account_id = acc.account_id AND log.timestamp >= CURRENT_DATE -90
+UNION
+SELECT DISTINCT acc.account_id, paym.fuzzy_device_id
+FROM omni_cust_ops_pii.vw_payments_threat_metrix paym
+INNER JOIN acc_id_table acc ON paym.account_id = acc.account_id AND PAYM.timestamp >= CURRENT_DATE -90
+UNION
+SELECT DISTINCT acc.account_id, crea.fuzzy_device_id
+FROM omni_cust_ops_pii.VW_ACCOUNT_THREAT_METRIX crea
+INNER JOIN acc_id_table acc ON crea.account_id = acc.account_id AND crea.timestamp >= CURRENT_DATE -90
+)
+, Matching_Accounts AS (
+SELECT smid.account_id, log.account_id AS Matching_Account
+FROM Smart_Ids smid
+INNER JOIN omni_cust_ops_pii.vw_login_threat_metrix log ON smid.fuzzy_device_id = log.fuzzy_device_id AND smid.account_id != log.account_id 
+UNION ALL
+SELECT smid.account_id,  paym.account_id AS Matching_Account
+FROM Smart_Ids smid
+INNER JOIN omni_cust_ops_pii.vw_payments_threat_metrix paym ON smid.fuzzy_device_id = paym.fuzzy_device_id AND smid.account_id != paym.account_id 
+UNION ALL
+SELECT smid.account_id, crea.account_id AS Matching_Account
+FROM Smart_Ids smid
+INNER JOIN omni_cust_ops_pii.vw_account_threat_metrix crea ON smid.fuzzy_device_id = crea.fuzzy_device_id AND smid.account_id != crea.account_id  
+)
+SELECT DISTINCT ma.matching_account,ma.account_id AS source_account_id ,CASE WHEN acc.brand_id = 1 THEN 'Betfair' ELSE 'Paddy Power' END AS Brand, acc.firstname, acc.surname, acc.email_address, acc.username, 
+       acc.account_status_desc, acc.security_status_desc, acc.residence_country_name
+FROM Matching_Accounts ma 
+INNER JOIN omni_account_pii.vw_account_pii acc ON ma.matching_account = acc.account_id

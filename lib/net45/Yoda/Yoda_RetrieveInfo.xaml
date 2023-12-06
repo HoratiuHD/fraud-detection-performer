@@ -1,0 +1,619 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Yoda_GetInfo" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:pb="clr-namespace:PPB_Yoda_Activities.Betting_And_Transactions;assembly=PPB.Yoda.Activities" xmlns:pc="clr-namespace:PPB_Yoda_Activities.Customer_Account_Information;assembly=PPB.Yoda.Activities" xmlns:pf="clr-namespace:PPB_Yoda_Activities.Flags;assembly=PPB.Yoda.Activities" xmlns:pk="clr-namespace:PPB_Yoda_Activities.KYC;assembly=PPB.Yoda.Activities" xmlns:pp="clr-namespace:PPB_Yoda_Activities.Payments;assembly=PPB.Yoda.Activities" xmlns:py="clr-namespace:PPB_Yoda_Activities.Yoda_Promotions;assembly=PPB.Yoda.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="out_YodaInformation" Type="OutArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_AccountNK" Type="InArgument(x:String)" />
+    <x:Property Name="in_MainAccount" Type="InArgument(x:Boolean)" />
+    <x:Property Name="io_LinkedAccountYodaInfo" Type="InOutArgument(sd:DataTable)" />
+    <x:Property Name="out_dtPromotions" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_dtBettingAndTransactionsHistory" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_dtPaymentHistory" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_DerwentPaymentsDTs" Type="OutArgument(scg:Dictionary(x:String, sd:DataTable))" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1657,8758</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>Yoda_Main_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="53">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>PPB_Yoda_Activities.Authentication</x:String>
+      <x:String>Newtonsoft.Json.Linq</x:String>
+      <x:String>Newtonsoft.Json</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>System.Net</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>PPB_Yoda_Activities.Customer_Account_Information</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>System.Globalization</x:String>
+      <x:String>UiPath.Web</x:String>
+      <x:String>UiPath.Web.Activities</x:String>
+      <x:String>System.Dynamic</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Collections.Specialized</x:String>
+      <x:String>PPB_Yoda_Activities.KYC</x:String>
+      <x:String>PPB_Yoda_Activities.Flags</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>PPB_Yoda_Activities.Yoda_Promotions</x:String>
+      <x:String>PPB_Yoda_Activities.Client_Roles_Management</x:String>
+      <x:String>PPB_Yoda_Activities.Payments</x:String>
+      <x:String>PPB_Yoda_Activities.Safer_Gambling</x:String>
+      <x:String>UiPath.CSV</x:String>
+      <x:String>UiPath.CSV.Activities</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>PPB_Yoda_Activities.Betting_And_Transactions</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="35">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Runtime.InteropServices.RuntimeInformation</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>PPB.Yoda.Activities</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.Word</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Web</AssemblyReference>
+      <AssemblyReference>UiPath.Web.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Yoda_GetInfo" sap:VirtualizedContainerService.HintSize="837,8693" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="strXAMLName" />
+      <Variable x:TypeArguments="x:String" Name="strValueTier" />
+      <Variable x:TypeArguments="x:String" Name="strFirstName" />
+      <Variable x:TypeArguments="x:String" Name="strLastName" />
+      <Variable x:TypeArguments="x:String" Name="strEmailAddress" />
+      <Variable x:TypeArguments="x:String" Name="strAccountStatus" />
+      <Variable x:TypeArguments="x:String" Name="strAddress1" />
+      <Variable x:TypeArguments="x:String" Name="strAddress2" />
+      <Variable x:TypeArguments="x:String" Name="strAddress3" />
+      <Variable x:TypeArguments="x:String" Name="strCountry" />
+      <Variable x:TypeArguments="x:String" Name="strCountyState" />
+      <Variable x:TypeArguments="x:String" Name="strKYCStatus" />
+      <Variable x:TypeArguments="x:String" Name="strPhoneNumber" />
+      <Variable x:TypeArguments="scg:List(x:String)" Name="listKYCAge" />
+      <Variable x:TypeArguments="x:String" Name="strTown" />
+      <Variable x:TypeArguments="x:String" Name="strLastLocation" />
+      <Variable x:TypeArguments="x:String" Name="strLastIPAddress" />
+      <Variable x:TypeArguments="x:Boolean" Name="bMSAAccount" />
+      <Variable x:TypeArguments="x:String" Name="strCurrency" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtLoginHistory" />
+      <Variable x:TypeArguments="scg:List(x:String)" Name="Active_Flags" />
+      <Variable x:TypeArguments="x:Boolean" Name="bRegistrationBlocked" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Name="dictAuthenticationCheck" />
+      <Variable x:TypeArguments="x:String" Name="strDob" />
+      <Variable x:TypeArguments="x:String" Name="strPostalCode" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign DisplayName="Assign strXAMLName" sap:VirtualizedContainerService.HintSize="795,64" sap2010:WorkflowViewState.IdRef="Assign_3">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[strXAMLName]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String" xml:space="preserve">["Yoda_RetrieveInfo ("+
+If(in_MainAccount,
+	"Main Account",
+	"Linked Account"
+	)+")"]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="795,91" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Retrieving YODA information for &quot;+If(in_MainAccount,&#xA;&#x9;&quot;Main Account&quot;,&#xA;&#x9;&quot;Linked Account&quot;&#xA;&#x9;)]" />
+    <ui:Comment sap:VirtualizedContainerService.HintSize="795,55" sap2010:WorkflowViewState.IdRef="Comment_2" Text="Retrieve Basic Account Info From Yoda" />
+    <TryCatch DisplayName="Try Catch  (Get_Info - Yoda)" sap:VirtualizedContainerService.HintSize="795,586" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+      <TryCatch.Try>
+        <ui:RetryScope DisplayName="Retry Scope (Get_Info - Yoda)" sap:VirtualizedContainerService.HintSize="376,359" sap2010:WorkflowViewState.IdRef="RetryScope_2" NumberOfRetries="2" RetryInterval="00:00:05">
+          <ui:RetryScope.ActivityBody>
+            <ActivityAction>
+              <pc:Get_Info out_Account_Change_Reason_Code="{x:Null}" out_Account_Open_Date="{x:Null}" out_Account_Type="{x:Null}" out_Gender="{x:Null}" out_Invalid_Account="{x:Null}" out_Lock_Status="{x:Null}" out_Personal_Account="{x:Null}" out_Preferred_Language="{x:Null}" out_Restricted_Account="{x:Null}" out_Security_Status="{x:Null}" out_Status_Code="{x:Null}" out_Title="{x:Null}" out_Username="{x:Null}" DisplayName="Get_Info - Yoda" sap:VirtualizedContainerService.HintSize="334,185" sap2010:WorkflowViewState.IdRef="Get_Info_1" in_Account_NK="[in_AccountNK]" in_Cookie="[in_Config(&quot;Cookie&quot;).ToString]" in_Production="[Convert.ToBoolean(in_Config(&quot;Yoda_Production&quot;).ToString)]" out_Account_Status="[strAccountStatus]" out_Address1="[strAddress1]" out_Address2="[strAddress2]" out_Address3="[strAddress3]" out_Country="[strCountry]" out_CountyState="[strCountyState]" out_Currency="[strCurrency]" out_DOB="[strDob]" out_Email="[strEmailAddress]" out_First_Name="[strFirstName]" out_KYC_Status="[strKYCStatus]" out_Last_Name="[strLastName]" out_MSA_Account="[bMSAAccount]" out_Phone_Number="[strPhoneNumber]" out_PostalCode="[strPostalCode]" out_Town="[strTown]" />
+            </ActivityAction>
+          </ui:RetryScope.ActivityBody>
+          <ui:RetryScope.Condition>
+            <ActivityFunc x:TypeArguments="x:Boolean" />
+          </ui:RetryScope.Condition>
+        </ui:RetryScope>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Throw Exception="[New SystemException(&quot;Yoda Get Info API call failed, exception: &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+    <ui:Comment sap:VirtualizedContainerService.HintSize="795,55" sap2010:WorkflowViewState.IdRef="Comment_15" Text="Retrieve security answers" />
+    <TryCatch DisplayName="Try Catch (Get Auth Check Info)" sap:VirtualizedContainerService.HintSize="795,423" sap2010:WorkflowViewState.IdRef="TryCatch_13">
+      <TryCatch.Try>
+        <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="334,196" sap2010:WorkflowViewState.IdRef="RetryScope_13" NumberOfRetries="2" RetryInterval="00:00:05">
+          <ui:RetryScope.ActivityBody>
+            <ActivityAction>
+              <pc:Get_AuthCheck_Info sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Get_AuthCheck_Info_4" in_Account_NK="[in_AccountNK]" in_Cookie="[in_Config(&quot;Cookie&quot;).ToString]" in_Production="[Convert.ToBoolean(in_Config(&quot;Yoda_Production&quot;).ToString)]" out_AuthCheck_Info="[dictAuthenticationCheck]" />
+            </ActivityAction>
+          </ui:RetryScope.ActivityBody>
+          <ui:RetryScope.Condition>
+            <ActivityFunc x:TypeArguments="x:Boolean" />
+          </ui:RetryScope.Condition>
+        </ui:RetryScope>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_13">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Throw Exception="[New SystemException(&quot;Yoda Get Auth Check Info API call failed, exception: &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_12" />
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+    <If Condition="[in_MainAccount = True]" DisplayName="If in_MainAccount = True" sap:VirtualizedContainerService.HintSize="795,6259" sap2010:WorkflowViewState.IdRef="If_4">
+      <If.Then>
+        <Sequence DisplayName="Main Account" sap:VirtualizedContainerService.HintSize="759,6072" sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:Comment sap:VirtualizedContainerService.HintSize="717,55" sap2010:WorkflowViewState.IdRef="Comment_16" Text="Get Derwant Payment Info using Yoda UI" />
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke YodaUI_Main workflow" sap:VirtualizedContainerService.HintSize="717,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Yoda\YodaUI_Main.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
+                <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
+              </InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_YodaUsername">
+                <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;YodaUI_Username&quot;).ToString" />
+              </InArgument>
+              <InArgument x:TypeArguments="ss:SecureString" x:Key="in_YodaPassword">
+                <mva:VisualBasicValue x:TypeArguments="ss:SecureString" ExpressionText="New System.Net.NetworkCredential(&quot;&quot;,in_Config(&quot;YodaUI_Password&quot;).ToString).SecurePassword" />
+              </InArgument>
+              <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">
+                <mva:VisualBasicValue x:TypeArguments="ui:QueueItem" ExpressionText="in_TransactionItem" />
+              </InArgument>
+              <OutArgument x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)" x:Key="out_DerwantPaymentsDTs">
+                <mva:VisualBasicReference x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)" ExpressionText="out_DerwentPaymentsDTs" />
+              </OutArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <ui:Comment sap:VirtualizedContainerService.HintSize="717,55" sap2010:WorkflowViewState.IdRef="Comment_8" Text="Retrieve Promotions" />
+          <TryCatch DisplayName="Try Catch (Get Yoda Promotions)" sap:VirtualizedContainerService.HintSize="717,586" sap2010:WorkflowViewState.IdRef="TryCatch_5">
+            <TryCatch.Try>
+              <ui:RetryScope DisplayName="Retry Scope (Get_Promotions)" sap:VirtualizedContainerService.HintSize="376,359" sap2010:WorkflowViewState.IdRef="RetryScope_5" NumberOfRetries="2" RetryInterval="00:00:05">
+                <ui:RetryScope.ActivityBody>
+                  <ActivityAction>
+                    <py:Get_Promotions sap:VirtualizedContainerService.HintSize="334,185" sap2010:WorkflowViewState.IdRef="Get_Promotions_1" in_Account_NK="[in_AccountNK]" in_Cookie="[in_Config(&quot;Cookie&quot;).ToString]" in_Production="[Convert.ToBoolean(in_Config(&quot;Yoda_Production&quot;).ToString)]" out_dtPromotions="[out_dtPromotions]" />
+                  </ActivityAction>
+                </ui:RetryScope.ActivityBody>
+                <ui:RetryScope.Condition>
+                  <ActivityFunc x:TypeArguments="x:Boolean" />
+                </ui:RetryScope.Condition>
+              </ui:RetryScope>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_5">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                  </ActivityAction.Argument>
+                  <Throw Exception="[New SystemException(&quot;Yoda Get Promotions API call failed, exception: &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_2" />
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+          </TryCatch>
+          <ui:Comment sap:VirtualizedContainerService.HintSize="717,55" sap2010:WorkflowViewState.IdRef="Comment_3" Text="Get Age Verification Info" />
+          <TryCatch DisplayName="Try Catch  (KYC_Check - Yoda)" sap:VirtualizedContainerService.HintSize="717,423" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+            <TryCatch.Try>
+              <ui:RetryScope DisplayName="Retry Scope (KYC_Check - Yoda)" sap:VirtualizedContainerService.HintSize="334,196" sap2010:WorkflowViewState.IdRef="RetryScope_3" NumberOfRetries="2" RetryInterval="00:00:05">
+                <ui:RetryScope.ActivityBody>
+                  <ActivityAction>
+                    <pk:KYC_Check out_Address_List="{x:Null}" out_E_Verification_Only="{x:Null}" out_Identity_List="{x:Null}" out_KYC_Status="{x:Null}" out_Pending_Docs="{x:Null}" out_Rejected_Docs="{x:Null}" out_SourceOfFunds_List="{x:Null}" out_Status_Code="{x:Null}" DisplayName="KYC_Check - Yoda" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="KYC_Check_2" in_Account_NK="[in_AccountNK]" in_Cookie="[in_Config(&quot;Cookie&quot;).ToString]" out_Age_List="[listKYCAge]" />
+                  </ActivityAction>
+                </ui:RetryScope.ActivityBody>
+                <ui:RetryScope.Condition>
+                  <ActivityFunc x:TypeArguments="x:Boolean" />
+                </ui:RetryScope.Condition>
+              </ui:RetryScope>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                  </ActivityAction.Argument>
+                  <Throw Exception="[New SystemException(&quot;Yoda KYC Check API call failed, exception: &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_3" />
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+          </TryCatch>
+          <ui:Comment sap:VirtualizedContainerService.HintSize="717,55" sap2010:WorkflowViewState.IdRef="Comment_4" Text="Get Value Tier" />
+          <TryCatch DisplayName="Try Catch  (Get_PPB_ValueTier - Yoda)" sap:VirtualizedContainerService.HintSize="717,423" sap2010:WorkflowViewState.IdRef="TryCatch_4">
+            <TryCatch.Try>
+              <ui:RetryScope DisplayName="Retry Scope (Get_PPB_ValueTier - Yoda)" sap:VirtualizedContainerService.HintSize="334,196" sap2010:WorkflowViewState.IdRef="RetryScope_4" NumberOfRetries="2" RetryInterval="00:00:10">
+                <ui:RetryScope.ActivityBody>
+                  <ActivityAction>
+                    <pc:Get_PPB_ValueTier sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Get_PPB_ValueTier_2" in_Account_NK="[in_AccountNK]" in_Cookie="[in_Config(&quot;Cookie&quot;).ToString]" out_PPBValueTier="[strValueTier]" />
+                  </ActivityAction>
+                </ui:RetryScope.ActivityBody>
+                <ui:RetryScope.Condition>
+                  <ActivityFunc x:TypeArguments="x:Boolean" />
+                </ui:RetryScope.Condition>
+              </ui:RetryScope>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_4">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                  </ActivityAction.Argument>
+                  <Throw Exception="[New SystemException(&quot;Yoda Get PPB Value Tier API call failed, exception: &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_4" />
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+          </TryCatch>
+          <ui:Comment sap:VirtualizedContainerService.HintSize="717,55" sap2010:WorkflowViewState.IdRef="Comment_5" Text="Get the Last Location and Last IP Address" />
+          <TryCatch DisplayName="Try Catch (Get Login History)" sap:VirtualizedContainerService.HintSize="717,586" sap2010:WorkflowViewState.IdRef="TryCatch_6">
+            <TryCatch.Try>
+              <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="376,359" sap2010:WorkflowViewState.IdRef="RetryScope_6" NumberOfRetries="2" RetryInterval="00:00:05">
+                <ui:RetryScope.ActivityBody>
+                  <ActivityAction>
+                    <pc:Get_LoginHistory sap:VirtualizedContainerService.HintSize="334,185" sap2010:WorkflowViewState.IdRef="Get_LoginHistory_1" in_Account_NK="[in_AccountNK]" in_Cookie="[in_Config(&quot;Cookie&quot;).ToString]" in_Production="[Convert.ToBoolean(in_Config(&quot;Yoda_Production&quot;).ToString)]" out_dtLoginHistory="[dtLoginHistory]" />
+                  </ActivityAction>
+                </ui:RetryScope.ActivityBody>
+                <ui:RetryScope.Condition>
+                  <ActivityFunc x:TypeArguments="x:Boolean" />
+                </ui:RetryScope.Condition>
+              </ui:RetryScope>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_6">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                  </ActivityAction.Argument>
+                  <Throw Exception="[New SystemException(&quot;Yoda Get Login History API call failed, exception: &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_5" />
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+          </TryCatch>
+          <If Condition="[dtLoginHistory.Rows.Count &gt; 0]" DisplayName="If data exists in dtLoginHistory" sap:VirtualizedContainerService.HintSize="717,592" sap2010:WorkflowViewState.IdRef="If_3">
+            <If.Then>
+              <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dtLoginHistory]" DisplayName="For Each Row in dtLoginHistory" sap:VirtualizedContainerService.HintSize="338,434" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+                <ui:ForEachRow.Body>
+                  <ActivityAction x:TypeArguments="sd:DataRow">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                    </ActivityAction.Argument>
+                    <Sequence DisplayName="Assign Last IP address and Last Location" sap:VirtualizedContainerService.HintSize="304,314" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign DisplayName="Assign strLastIPAddress" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_16">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[strLastIPAddress]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[row("ipAddress").ToString]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign DisplayName="Assign strLastLocation" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_17">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[strLastLocation]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[row("countryCode").ToString]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:Break sap:VirtualizedContainerService.HintSize="262,22" sap2010:WorkflowViewState.IdRef="Break_2" />
+                    </Sequence>
+                  </ActivityAction>
+                </ui:ForEachRow.Body>
+              </ui:ForEachRow>
+            </If.Then>
+            <If.Else>
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;No login history for this account&quot;]" />
+            </If.Else>
+          </If>
+          <ui:Comment sap:VirtualizedContainerService.HintSize="717,74" sap2010:WorkflowViewState.IdRef="Comment_9" Text="Retrieve flags and check for Fraud Registration Blocked" />
+          <TryCatch DisplayName="Try Catch (Flags Enabled)" sap:VirtualizedContainerService.HintSize="717,586" sap2010:WorkflowViewState.IdRef="TryCatch_7">
+            <TryCatch.Try>
+              <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="376,359" sap2010:WorkflowViewState.IdRef="RetryScope_7" NumberOfRetries="2" RetryInterval="00:00:05">
+                <ui:RetryScope.ActivityBody>
+                  <ActivityAction>
+                    <pf:Flags_Enabled sap:VirtualizedContainerService.HintSize="334,185" sap2010:WorkflowViewState.IdRef="Flags_Enabled_1" in_Account_NK="[in_AccountNK]" in_Cookie="[in_Config(&quot;Cookie&quot;).ToString]" in_Production="[Convert.ToBoolean(in_Config(&quot;Yoda_Production&quot;).ToString)]" out_Enabled_Flags="[Active_Flags]" />
+                  </ActivityAction>
+                </ui:RetryScope.ActivityBody>
+                <ui:RetryScope.Condition>
+                  <ActivityFunc x:TypeArguments="x:Boolean" />
+                </ui:RetryScope.Condition>
+              </ui:RetryScope>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_7">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                  </ActivityAction.Argument>
+                  <Throw Exception="[New SystemException(&quot;Yoda Flags Enabled API call failed, exception: &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_6" />
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+          </TryCatch>
+          <Assign DisplayName="Assign bRegistrationBlocked" sap:VirtualizedContainerService.HintSize="717,60" sap2010:WorkflowViewState.IdRef="Assign_19">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Boolean">[bRegistrationBlocked]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Boolean">[IF(Active_Flags.Contains("Fraud - Registration Blocked"),True,False)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="717,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[IF(Active_Flags.Contains(&quot;Fraud - Registration Blocked&quot;),&quot;Account triggered at registration; Fraud - Registration Blocked flag present&quot;,&quot;Fraud - Registration Blocked flag not present on account&quot;)]" />
+          <ui:Comment sap:VirtualizedContainerService.HintSize="717,55" sap2010:WorkflowViewState.IdRef="Comment_10" Text="Retrieve Payment Transaction history" />
+          <TryCatch DisplayName="Try Catch (Get Payment Transaction History)" sap:VirtualizedContainerService.HintSize="717,586" sap2010:WorkflowViewState.IdRef="TryCatch_8">
+            <TryCatch.Try>
+              <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="376,359" sap2010:WorkflowViewState.IdRef="RetryScope_8" NumberOfRetries="2" RetryInterval="00:00:05">
+                <ui:RetryScope.ActivityBody>
+                  <ActivityAction>
+                    <pp:Get_Payment_Transaction_History out_PaymentHistoryCards="{x:Null}" out_PaymentHistoryEWallets="{x:Null}" out_PaymentHistoryInstantBankTransfers="{x:Null}" out_PaymentHistoryMobilePayments="{x:Null}" sap:VirtualizedContainerService.HintSize="334,185" sap2010:WorkflowViewState.IdRef="Get_Payment_Transaction_History_1" in_Account_NK="[in_AccountNK]" in_Cookie="[in_Config(&quot;Cookie&quot;).ToString]" in_Production="[Convert.ToBoolean(in_Config(&quot;Yoda_Production&quot;).ToString)]" in_historyType="[{&quot;payment&quot;}]" out_PaymentHistory="[out_dtPaymentHistory]" />
+                  </ActivityAction>
+                </ui:RetryScope.ActivityBody>
+                <ui:RetryScope.Condition>
+                  <ActivityFunc x:TypeArguments="x:Boolean" />
+                </ui:RetryScope.Condition>
+              </ui:RetryScope>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_8">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                  </ActivityAction.Argument>
+                  <Throw Exception="[New SystemException(&quot;Yoda Get Payment Transaction History API call failed, exception: &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_7" />
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+          </TryCatch>
+          <ui:Comment sap:VirtualizedContainerService.HintSize="717,74" sap2010:WorkflowViewState.IdRef="Comment_11" Text="Retrieve last 30 days of Betting and Transactions" />
+          <TryCatch DisplayName="Try Catch (Get Betting and Transactions)" sap:VirtualizedContainerService.HintSize="717,423" sap2010:WorkflowViewState.IdRef="TryCatch_9">
+            <TryCatch.Try>
+              <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="334,196" sap2010:WorkflowViewState.IdRef="RetryScope_9" NumberOfRetries="2" RetryInterval="00:00:05">
+                <ui:RetryScope.ActivityBody>
+                  <ActivityAction>
+                    <pb:Get_Betting_And_Transactions sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Get_Betting_And_Transactions_1" in_Account_NK="[in_AccountNK]" in_Cookie="[in_Config(&quot;Cookie&quot;).ToString]" in_EndDate="[Convert.ToDateTime(system.DateTime.Today)]" in_Production="[Convert.ToBoolean(in_Config(&quot;Yoda_Production&quot;).ToString)]" in_StartDate="[Convert.ToDateTime(system.DateTime.Today.AddDays(-31))]" in_product="All" out_transaction_history="[out_dtBettingAndTransactionsHistory]" />
+                  </ActivityAction>
+                </ui:RetryScope.ActivityBody>
+                <ui:RetryScope.Condition>
+                  <ActivityFunc x:TypeArguments="x:Boolean" />
+                </ui:RetryScope.Condition>
+              </ui:RetryScope>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_9">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                  </ActivityAction.Argument>
+                  <Throw Exception="[New SystemException(&quot;Yoda Get Betting and Transactions API call failed, exception: &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_8" />
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+          </TryCatch>
+          <Assign sap2010:Annotation.AnnotationText="This is needed when creating the form as the form doesn't accept special characters such as &quot;/&quot;, &quot;_&quot;, etc" DisplayName="Assign new column name for TransactionType/Status" sap:VirtualizedContainerService.HintSize="717,117" sap2010:WorkflowViewState.IdRef="Assign_20">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[out_dtBettingAndTransactionsHistory.Columns("TransactionType/Status").ColumnName]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["TransactionTypeStatus"]</InArgument>
+            </Assign.Value>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Assign>
+          <Assign sap2010:Annotation.AnnotationText="This is needed when creating the form as the form doesn't accept special characters such as &quot;/&quot;, &quot;_&quot;, etc" DisplayName="Assign new column name for PlaceDate/ActionDate" sap:VirtualizedContainerService.HintSize="717,117" sap2010:WorkflowViewState.IdRef="Assign_21">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[out_dtBettingAndTransactionsHistory.Columns("PlaceDate/ActionDate").ColumnName]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["PlaceDateActionDate"]</InArgument>
+            </Assign.Value>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Assign>
+        </Sequence>
+      </If.Then>
+    </If>
+    <ui:Comment sap:VirtualizedContainerService.HintSize="795,94" sap2010:WorkflowViewState.IdRef="Comment_7" Text="If Main Account, add to a Dictionary. &#xA;&#xA;If Linked Account, add to a Datatable" />
+    <If Condition="[in_MainAccount]" DisplayName="If in_MainAccount (Yoda_GetInfo)" sap:VirtualizedContainerService.HintSize="795,654" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <Assign sap2010:Annotation.AnnotationText="Add the Following Keys to the Dictionary:&#xA;Name&#xA;Address1&#xA;Address2&#xA;Address3&#xA;Country&#xA;CountyState&#xA;Town&#xA;PhoneNumber&#xA;AccountStatus&#xA;KYCStatus&#xA;AgeVerification&#xA;ValueTier&#xA;LastLocation&#xA;LastIPAddress&#xA;PromoCodes&#xA;MSAAccount&#xA;FraudRegistrationBlocked&#xA;PaymentTransactionHistory&#xA;BettingAndTransactionHistory&#xA;firstSecurityQuestion&#xA;firstSecurityAnswer&#xA;secondSecurityQuestion&#xA;secondSecurityAnswer&#xA;&#xA;Function found on: https://forum.uipath.com/t/how-to-append-one-dictionary-to-another/99468/4" DisplayName="Assign out_YodaInformation (Yoda_GetInfo)" sap:VirtualizedContainerService.HintSize="262,496" sap2010:WorkflowViewState.IdRef="Assign_13">
+          <Assign.To>
+            <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)">[out_YodaInformation]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" xml:space="preserve">[If(out_YodaInformation Is Nothing,
+New Dictionary(Of String, Object) From {
+{"Name", strFirstName+" "+strLastName},
+{"Address1", strAddress1},
+{"Address2", strAddress2},
+{"Address3", strAddress3},
+{"Country", strCountry},
+{"CountyState", strCountyState},
+{"Town", strTown},
+{"PhoneNumber", strPhoneNumber},
+{"AccountStatus", strAccountStatus},
+{"KYCStatus", strKYCStatus},
+{"AgeVerification", If(listKYCAge IsNot Nothing,(String.Join(", ", listKYCAge)),"N/A")},
+{"ValueTier", strValueTier},
+{"LastLocation", strLastLocation},
+{"LastIPAddress", strLastIPAddress},
+{"MSAAccount", bMSAAccount},
+{"FraudRegistrationBlocked",bRegistrationBlocked},
+{"firstSecurityQuestion",dictAuthenticationCheck("firstSecurityQuestion").Tostring},
+{"firstSecurityAnswer",dictAuthenticationCheck("firstSecurityAnswer").Tostring},
+{"secondSecurityQuestion",dictAuthenticationCheck("secondSecurityQuestion").Tostring},
+{"secondSecurityAnswer",dictAuthenticationCheck("secondSecurityAnswer").Tostring}
+},
+out_YodaInformation.Union(New Dictionary(Of String, Object) From {
+{"Name", strFirstName+" "+strLastName},
+{"Address1", strAddress1},
+{"Address2", strAddress1},
+{"Address3", strAddress1},
+{"Country", strCountry},
+{"CountyState", strCountyState},
+{"Town", strTown},
+{"PhoneNumber", strPhoneNumber},
+{"AccountStatus", strAccountStatus},
+{"KYCStatus", strKYCStatus},
+{"AgeVerification", If(listKYCAge IsNot Nothing,(String.Join(", ", listKYCAge)),"N/A")},
+{"ValueTier", strValueTier},
+{"LastLocation", strLastLocation},
+{"LastIPAddress", strLastIPAddress},
+{"MSAAccount", bMSAAccount},
+{"FraudRegistrationBlocked",bRegistrationBlocked},
+{"firstSecurityQuestion",dictAuthenticationCheck("firstSecurityQuestion").Tostring},
+{"firstSecurityAnswer",dictAuthenticationCheck("firstSecurityAnswer").Tostring},
+{"secondSecurityQuestion",dictAuthenticationCheck("secondSecurityQuestion").Tostring},
+{"secondSecurityAnswer",dictAuthenticationCheck("secondSecurityAnswer").Tostring}
+}).ToDictionary(Function (k) k.Key, Function(v) v.Value)
+)]</InArgument>
+          </Assign.Value>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <ui:AddDataRow DataRow="{x:Null}" sap2010:Annotation.AnnotationText="Columns are as follows:&#xA;AccountNK&#xA;Name&#xA;DOB&#xA;firstSecurityQuestion&#xA;firstSecurityAnswer&#xA;secondSecurityQuestion&#xA;secondSecurityAnswer" ArrayRow="[{&#xA;in_AccountNK,&#xA;strFirstName+&quot; &quot;+strLastName,&#xA;strDob,&#xA;dictAuthenticationCheck(&quot;firstSecurityQuestion&quot;).Tostring,&#xA;dictAuthenticationCheck(&quot;firstSecurityAnswer&quot;).Tostring,&#xA;dictAuthenticationCheck(&quot;secondSecurityQuestion&quot;).Tostring,&#xA;dictAuthenticationCheck(&quot;secondSecurityAnswer&quot;).Tostring&#xA;}]" DataTable="[io_LinkedAccountYodaInfo]" DisplayName="Add Data Row - io_LinkedAccountYodaInfo (Yoda_GetInfo)" sap:VirtualizedContainerService.HintSize="200,154" sap2010:WorkflowViewState.IdRef="AddDataRow_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </ui:AddDataRow>
+      </If.Else>
+    </If>
+  </Sequence>
+</Activity>

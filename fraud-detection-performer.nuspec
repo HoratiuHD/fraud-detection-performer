@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>fraud-detection-performer</id>
+    <version>1.0.0-alpha.4</version>
+    <title>fraud-detection-performer</title>
+    <authors>bcussen</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This Automation retrieves various Account Details and displays them on an Action Center Form. An Executive can then use the Action Center Form to select Various Actions to be taken on an Account. Once the Form is completed, the Bot performs the required Action</description>
+    <releaseNotes>Have updated Yoda UI Components so they are more versatile and implemented them into the Build. Have added DataGrids to AC for Derwant Payments info, have updated SetTransactionStatus Logic</releaseNotes>
+    <tags>VisualBasic VB UiPathStudioProcess</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.1">
+        <dependency id="PPB.Database.Activities" version="[1.0.1]" />
+        <dependency id="PPB.Yoda.Activities" version="[1.0.67]" />
+        <dependency id="UiPath.Excel.Activities" version="[2.9.5]" />
+        <dependency id="UiPath.Form.Activities" version="[1.7.1]" />
+        <dependency id="UiPath.FormActivityLibrary" version="[1.7.1]" />
+        <dependency id="UiPath.Mail.Activities" version="[1.20.3]" />
+        <dependency id="UiPath.Persistence.Activities" version="[1.3.1]" />
+        <dependency id="UiPath.System.Activities" version="[21.4.1]" />
+        <dependency id="UiPath.UIAutomation.Activities" version="[21.4.3]" />
+        <dependency id="UiPath.WebAPI.Activities" version="[1.7.0]" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

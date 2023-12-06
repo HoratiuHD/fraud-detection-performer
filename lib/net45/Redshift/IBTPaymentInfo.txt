@@ -1,0 +1,15 @@
+SELECT DISTINCT ct.account_id,
+       ct.payment_method,
+       ct.iban,
+       ct.remitter_name,
+       ct.bank_name,
+       pi.firstname,
+       pi.surname
+FROM omni_payment_pii.vw_cash_transactions_history_new ct, omni_account_pii.vw_account_pii pi
+WHERE 1=1
+AND pi.account_id = ct.account_id
+AND ct.transaction_date >= CURRENT_DATE - 365
+AND ct.account_id = {AccountId}
+AND ct.payment_method = 'INSTANTBANKTRANSFER'
+and ct.iban IS NOT NULL
+AND ct.bank_name IS NOT NULL

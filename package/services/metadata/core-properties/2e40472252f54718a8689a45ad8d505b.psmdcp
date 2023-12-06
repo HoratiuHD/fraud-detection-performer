@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties">
+  <dc:creator>bcussen</dc:creator>
+  <dc:description>This Automation retrieves various Account Details and displays them on an Action Center Form. An Executive can then use the Action Center Form to select Various Actions to be taken on an Account. Once the Form is completed, the Bot performs the required Action</dc:description>
+  <dc:identifier>fraud-detection-performer</dc:identifier>
+  <version>1.0.0-alpha.4</version>
+  <keywords>VisualBasic VB UiPathStudioProcess</keywords>
+  <lastModifiedBy>NuGet.Packaging, Version=5.8.0.6930, Culture=neutral, PublicKeyToken=31bf3856ad364e35;</lastModifiedBy>
+</coreProperties>

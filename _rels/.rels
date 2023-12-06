@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Type="http://schemas.microsoft.com/packaging/2010/07/manifest" Target="/fraud-detection-performer.nuspec" Id="RFC6DEFF3A4E500F1" />
+  <Relationship Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="/package/services/metadata/core-properties/2e40472252f54718a8689a45ad8d505b.psmdcp" Id="RDECC051DFE3434E2" />
+</Relationships>
