@@ -7149,9 +7149,9 @@
     "restore": {
       "projectUniqueName": "fraud-detection-performer",
       "projectName": "fraud-detection-performer",
-      "projectPath": "C:\\Users\\deach\\Downloads\\fraud-detection-performer.1.0.0-alpha.4\\lib\\net45\\.local",
+      "projectPath": "C:\\Users\\deach\\Desktop\\Dev\\PPB\\fraud-detection-performer\\lib\\net45\\.local",
       "packagesPath": "C:\\Users\\deach\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\deach\\Downloads\\fraud-detection-performer.1.0.0-alpha.4\\lib\\net45\\.local"
+      "outputPath": "C:\\Users\\deach\\Desktop\\Dev\\PPB\\fraud-detection-performer\\lib\\net45\\.local"
     },
     "frameworks": {
       "net461": {

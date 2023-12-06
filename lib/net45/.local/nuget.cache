@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ubb3sqzcSevBazGpZnbueO7dBfMASbzEW9dAoUTTlIjbMFVi4+g0vb8NXjHzFYos2fQSqmTK1Rm9jU6UXwua9g==",
+  "dgSpecHash": "KxJeYiyLRKVcu/gaNdFOuvmXVykDE+BzBKI/085LHtbJeWrnxa4s6MZ0Ec1uSlhaxzWTwUucU3sBcXb0EQXN3A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\deach\\Downloads\\fraud-detection-performer.1.0.0-alpha.4\\lib\\net45\\.local\\",
+  "projectFilePath": "C:\\Users\\deach\\Desktop\\Dev\\PPB\\fraud-detection-performer\\lib\\net45\\.local\\",
   "expectedPackageFiles": [
     "C:\\Users\\deach\\.nuget\\packages\\avalonedit\\6.0.1\\avalonedit.6.0.1.nupkg.sha512",
     "C:\\Users\\deach\\.nuget\\packages\\bouncycastle\\1.8.5\\bouncycastle.1.8.5.nupkg.sha512",

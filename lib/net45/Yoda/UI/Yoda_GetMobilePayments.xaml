@@ -6,7 +6,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1247,4748</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1539,4593</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Yoda_GetCardDetails_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="35">
@@ -80,7 +80,7 @@
       <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Yoda_GetMobilePayments" sap:VirtualizedContainerService.HintSize="1257,4683" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Yoda_GetMobilePayments" sap:VirtualizedContainerService.HintSize="1257,4528" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Default="Yoda_GetMobilePayments" Name="strXAMLName" />
       <Variable x:TypeArguments="x:String" Name="strMobileTableText" />
@@ -490,12 +490,5 @@
       </sap:WorkflowViewStateService.ViewState>
     </ui:BrowserScope>
     <ui:LogMessage DisplayName="Log Message - EWallets Retrieved" sap:VirtualizedContainerService.HintSize="1215,91" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[strXAMLName+&quot;: &quot;+out_AccRegisteredMobilePaymentsDataTable.Rows.Count.ToString+&quot; Active Mobile Payment&quot;+If(out_AccRegisteredMobilePaymentsDataTable.Rows.Count = 1, &quot;&quot;, &quot;s&quot;)+&quot; retrieved for &quot;+in_AccountID+&#xA;If(bNoActiveMobile,&#xA;&#x9;&quot; (Can see &quot;&quot;&quot;+strMobileTableText+&quot;&quot;&quot; Message on Page)&quot;,&#xA;&#x9;&quot;&quot;&#xA;)]" />
-    <ui:WriteRange AddHeaders="True" DataTable="[out_AccRegisteredMobilePaymentsDataTable]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="1215,115" sap2010:WorkflowViewState.IdRef="WriteRange_2" SheetName="Mobile" WorkbookPath="test123.xlsx">
-      <ui:WriteRange.StartingCell>
-        <InArgument x:TypeArguments="x:String">
-          <Literal x:TypeArguments="x:String" Value="" />
-        </InArgument>
-      </ui:WriteRange.StartingCell>
-    </ui:WriteRange>
   </Sequence>
 </Activity>

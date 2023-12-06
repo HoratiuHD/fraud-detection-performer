@@ -14,7 +14,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1657,8758</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1539,8758</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Yoda_Main_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="53">
@@ -243,7 +243,7 @@ If(in_MainAccount,
               <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">
                 <mva:VisualBasicValue x:TypeArguments="ui:QueueItem" ExpressionText="in_TransactionItem" />
               </InArgument>
-              <OutArgument x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)" x:Key="out_DerwantPaymentsDTs">
+              <OutArgument x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)" x:Key="out_DerwentPaymentsDTs">
                 <mva:VisualBasicReference x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)" ExpressionText="out_DerwentPaymentsDTs" />
               </OutArgument>
             </ui:InvokeWorkflowFile.Arguments>
